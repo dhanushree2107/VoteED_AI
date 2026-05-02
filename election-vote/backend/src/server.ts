@@ -170,7 +170,7 @@ app.get('/api/admin/audit-logs', (req: Request, res: Response) => {
 // Serve frontend
 app.use(express.static(path.join(__dirname, "dist")));
 
-app.get("*", (req: Request, res: Response) => {
+app.use((req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
