@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import path from 'path';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
@@ -10,6 +11,7 @@ import crypto from 'crypto';
 dotenv.config();
 
 const app = express();
+const __dirname = path.resolve();
 const PORT = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET || 'election-edu-secret-2025';
 
@@ -165,9 +167,11 @@ app.get('/api/admin/audit-logs', (req: Request, res: Response) => {
   res.json(auditLogs);
 });
 
-// ─── Health Check ─────────────────────────────────────────────────────────────
-app.get('/', (_req: Request, res: Response) => {
-  res.json({ status: 'ok', message: 'Election Process Education System API' });
+// Serve frontend
+app.use(express.static(path.join(__dirname, "dist")));
+
+app.get("*", (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
 // ─── Start ────────────────────────────────────────────────────────────────────

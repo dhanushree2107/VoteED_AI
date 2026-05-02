@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx src/server.ts",
-    "build": "tsc",
+    "build": "cd ../frontend && npm install && vite build && cp -r dist ../backend/dist && cd ../backend && tsc",
     "start": "node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
